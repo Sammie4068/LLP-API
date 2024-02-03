@@ -29,7 +29,7 @@ exports.getNumOfParts = async (req, res, next) => {
 exports.getParts = async (req, res, next) => {
   try {
     const results = await getParts(req.params.aircraft);
-    res.json( {lenght: results.rows.length,data:results.rows});
+    res.json(results.rows);
   } catch (err) {
     return next(err);
   }
