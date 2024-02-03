@@ -4,6 +4,7 @@ const {
   getParts,
   addParts,
   updateParts,
+  getNumOfParts,
 } = require("../models/index");
 
 exports.getAllPlanes = async (req, res, next) => {
@@ -15,10 +16,20 @@ exports.getAllPlanes = async (req, res, next) => {
   }
 };
 
+exports.getNumOfParts = async (req, res, next) => {
+  try {
+    const results = await getNumOfParts();
+    res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
 exports.getParts = async (req, res, next) => {
   try {
     const results = await getParts(req.params.aircraft);
-    res.json(results.rows);
+    res.json( {lenght: results.rows.length,data:results.rows});
   } catch (err) {
     return next(err);
   }
@@ -62,3 +73,4 @@ exports.updateParts = async (req, res, next) => {
     return next(err)
   }
 }
+

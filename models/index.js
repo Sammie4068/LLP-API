@@ -37,3 +37,9 @@ exports.updateParts = async (data) => {
     ]
   );
 };
+
+exports.getNumOfParts = async() => {
+  return db.query(
+    "SELECT a.name, COUNT(p.id) FROM aircrafts a JOIN parts p ON a.name = p.aircraft GROUP BY a.id;"
+  );
+}
