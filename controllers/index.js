@@ -7,6 +7,7 @@ const {
   getNumOfParts,
   logUpdate,
   landingUpdate,
+  addAircraft,
 } = require("../models/index");
 
 exports.getAllPlanes = async (req, res, next) => {
@@ -27,7 +28,6 @@ exports.getNumOfParts = async (req, res, next) => {
   }
 };
 
-
 exports.getParts = async (req, res, next) => {
   try {
     const results = await getParts(req.params.aircraft);
@@ -39,7 +39,8 @@ exports.getParts = async (req, res, next) => {
 
 exports.addParts = async (req, res, next) => {
   try {
-    const { aircraft, description, number, quantity, ac, hrsleft, date} = req.body
+    const { aircraft, description, number, quantity, ac, hrsleft, date } =
+      req.body;
     const data = {
       aircraft,
       description,
@@ -50,16 +51,31 @@ exports.addParts = async (req, res, next) => {
       date,
     };
     const results = await addParts(data);
-    res.json(results.rows)
+    res.json(results.rows);
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-}
+};
+
+exports.addAircraft = async (req, res, next) => {
+  try {
+    const { name, tat, tet, landings } = req.body;
+    const data = {
+      name,
+      tat,
+      tet,
+      landings,
+    };
+    const results = await addAircraft(data);
+    res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
 
 exports.updateParts = async (req, res, next) => {
   try {
-    const { id, description, number, quantity, ac, hrsleft, date } =
-      req.body;
+    const { description, number, quantity, ac, hrsleft, date } = req.body;
     const data = {
       description,
       number,
@@ -72,17 +88,17 @@ exports.updateParts = async (req, res, next) => {
     const results = await updateParts(data);
     res.json(results.rows);
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-}
+};
 
 exports.logUpdate = async (req, res, next) => {
   try {
-    const {aircraft, ac, landings} = req.body
+    const { aircraft, ac, landings } = req.body;
     const partsUpdate = await logUpdate(ac, aircraft);
     const landingUpdateRes = await landingUpdate(landings, ac, aircraft);
-    res.json("sucess")
+    res.json("sucess");
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-}
+};

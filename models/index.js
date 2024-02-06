@@ -57,3 +57,15 @@ exports.landingUpdate = async (landings,ac, aircraft) => {
     [landings, ac, aircraft]
   );
 };
+
+exports.addAircraft = async (data) => {
+  return db.query(
+    "INSERT INTO aircrafts (name, tat, tet, landings) VALUES ($1, $2, $3, $4) RETURNING *",
+    [
+      data.name,
+      data.tat,
+      data.tet,
+      data.landings
+    ]
+  );
+};
