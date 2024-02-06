@@ -8,6 +8,7 @@ const {
   logUpdate,
   landingUpdate,
   addAircraft,
+  removePart,
 } = require("../models/index");
 
 exports.getAllPlanes = async (req, res, next) => {
@@ -102,3 +103,12 @@ exports.logUpdate = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.removePart = async(req, res, next) => {
+  try {
+    const results = await removePart(req.params.id)
+    res.json("success")
+  } catch (err) {
+    return next(err)
+  }
+}

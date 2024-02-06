@@ -69,3 +69,9 @@ exports.addAircraft = async (data) => {
     ]
   );
 };
+
+exports.removePart = async (id) => {
+  return db.query(
+    "DELETE FROM parts WHERE id = $1",[id]
+  )
+}
