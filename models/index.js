@@ -51,9 +51,9 @@ exports.logUpdate = async (ac, aircraft) => {
   );
 };
 
-exports.landingUpdate = async (landings, aircraft) => {
+exports.landingUpdate = async (landings,ac, aircraft) => {
   return db.query(
-    "UPDATE aircrafts SET landings = landings + $1 WHERE name=$2 RETURNING *",
-    [landings, aircraft]
+    "UPDATE aircrafts SET landings = landings + $1, tet = tet + $2 WHERE name=$3 RETURNING *",
+    [landings, ac, aircraft]
   );
 };
