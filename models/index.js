@@ -38,8 +38,22 @@ exports.updateParts = async (data) => {
   );
 };
 
-exports.getNumOfParts = async() => {
+exports.getNumOfParts = async () => {
   return db.query(
     "SELECT a.name, COUNT(p.id) FROM aircrafts a JOIN parts p ON a.name = p.aircraft GROUP BY a.id;"
   );
-}
+};
+
+exports.logUpdate = async (ac, aircraft) => {
+  return db.query(
+    "UPDATE parts SET ac = ac + $1, hrsleft = hrsleft - $1 WHERE aircraft=$2 RETURNING *",
+    [ac, aircraft]
+  );
+};
+
+exports.landingUpdate = async (landings, aircraft) => {
+  return db.query(
+    "UPDATE aircrafts SET landings = landings + $1 WHERE name=$2 RETURNING *",
+    [landings, aircraft]
+  );
+};

@@ -5,6 +5,8 @@ const {
   addParts,
   updateParts,
   getNumOfParts,
+  logUpdate,
+  landingUpdate,
 } = require("../models/index");
 
 exports.getAllPlanes = async (req, res, next) => {
@@ -74,3 +76,13 @@ exports.updateParts = async (req, res, next) => {
   }
 }
 
+exports.logUpdate = async (req, res, next) => {
+  try {
+    const {aircraft, ac, landings} = req.body
+    const partsUpdate = await logUpdate(ac, aircraft);
+    const landingUpdateRes = await landingUpdate(landings, aircraft);
+    res.json("sucess")
+  } catch (err) {
+    return next(err)
+  }
+}
