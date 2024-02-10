@@ -12,7 +12,33 @@ const {
   addAircraft,
   removePart,
   getLogByID,
+  getDoc,
+  addDoc,
 } = require("../models/index");
+
+const uploadImage = require("../utilities/index");
+
+exports.addDoc = async (req, res, next) => {
+  try {
+    const response = await uploadImage(req.file.path);
+    const { url } = response;
+
+    const {aircraft, title, issue, expiring} = req.body
+
+    const data = {
+      aircraft,
+      title,
+      issue,
+      expiring,
+      photo: url
+    };
+
+    const result = await addDoc(data);
+    res.json(result.rows);
+  } catch (er) {
+    return next(err);
+  }
+};
 
 exports.getAllPlanes = async (req, res, next) => {
   try {
@@ -52,6 +78,15 @@ exports.getLogByID = async (req, res, next) => {
 exports.getLog = async (req, res, next) => {
   try {
     const results = await getLog(req.params.aircraft);
+    res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.getDoc = async (req, res, next) => {
+  try {
+    const results = await getDoc(req.params.aircraft);
     res.json(results.rows);
   } catch (err) {
     return next(err);
@@ -108,7 +143,6 @@ exports.updateParts = async (req, res, next) => {
     res.json(results.rows);
   } catch (err) {
     return next(err);
-
   }
 };
 
@@ -123,11 +157,11 @@ exports.logUpdate = async (req, res, next) => {
   }
 };
 
-exports.removePart = async(req, res, next) => {
+exports.removePart = async (req, res, next) => {
   try {
-    const results = await removePart(req.params.id)
-    res.json("success")
+    const results = await removePart(req.params.id);
+    res.json("success");
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-}
+};

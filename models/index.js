@@ -15,6 +15,10 @@ exports.getLog = async (aircraft) => {
   return db.query("SELECT * FROM logs WHERE aircraft = $1", [aircraft]);
 };
 
+exports.getDoc = async (aircraft) => {
+  return db.query("SELECT * FROM docs WHERE aircraft = $1", [aircraft]);
+};
+
 exports.addParts = async (data) => {
   return db.query(
     "INSERT INTO parts (aircraft, description, number, quantity, ac, hrsleft, date) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
@@ -55,6 +59,20 @@ exports.addLog = async (data) => {
     ]
   );
 };
+
+exports.addDoc = async (data) => {
+  return db.query(
+    "INSERT INTO docs VALUES (DEFAULT,$1,$2,$3,$4,$5) RETURNING *",
+    [
+      data.aircraft,
+      data.title,
+      data.photo,
+      data.issue,
+      data.expiring,
+    ]
+  );
+};
+
 
 exports.updateParts = async (data) => {
   return db.query(
