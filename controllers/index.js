@@ -11,6 +11,7 @@ const {
   landingUpdate,
   addAircraft,
   removePart,
+  getLogByID,
 } = require("../models/index");
 
 exports.getAllPlanes = async (req, res, next) => {
@@ -34,6 +35,14 @@ exports.getNumOfParts = async (req, res, next) => {
 exports.getParts = async (req, res, next) => {
   try {
     const results = await getParts(req.params.aircraft);
+    res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+exports.getLogByID = async (req, res, next) => {
+  try {
+    const results = await getLogByID(req.params.id);
     res.json(results.rows);
   } catch (err) {
     return next(err);

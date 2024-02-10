@@ -7,6 +7,9 @@ exports.getAllPlanes = async () => {
 exports.getParts = async (aircraft) => {
   return db.query("SELECT * FROM parts WHERE aircraft = $1", [aircraft]);
 };
+exports.getLogByID = async (id) => {
+  return db.query("SELECT * FROM logs WHERE id = $1", [id]);
+};
 
 exports.getLog = async (aircraft) => {
   return db.query("SELECT * FROM logs WHERE aircraft = $1", [aircraft]);
