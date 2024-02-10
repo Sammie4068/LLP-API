@@ -62,13 +62,15 @@ exports.addLog = async (data) => {
 
 exports.addDoc = async (data) => {
   return db.query(
-    "INSERT INTO docs VALUES (DEFAULT,$1,$2,$3,$4,$5) RETURNING *",
+    "INSERT INTO docs VALUES (DEFAULT,$1,$2,$3,$4,$5,$6,$7) RETURNING *",
     [
       data.aircraft,
       data.title,
       data.photo,
       data.issue,
       data.expiring,
+      data.created,
+      data.status,
     ]
   );
 };

@@ -22,15 +22,31 @@ exports.addDoc = async (req, res, next) => {
   try {
     const response = await uploadImage(req.file.path);
     const { url } = response;
+    const { aircraft, title, issue, expiring } = req.body;
 
-    const {aircraft, title, issue, expiring} = req.body
+    let status;
+    const expiringDate = new Date(expiring);
+    const currentDate = new Date();
+    const daysDifference = Math.floor(
+      (expiringDate - currentDate) / (1000 * 60 * 60 * 24)
+    );
+    status = daysDifference;
+    if (daysDifference <= 90 && daysDifference >= 0) {
+      status = "ambient";
+    } else if (daysDifference <= 0) {
+      status = "expired";
+    } else {
+      status = "serviceable";
+    }
 
     const data = {
       aircraft,
       title,
       issue,
       expiring,
-      photo: url
+      photo: url,
+      created: currentDate,
+      status,
     };
 
     const result = await addDoc(data);
