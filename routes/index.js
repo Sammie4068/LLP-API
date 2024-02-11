@@ -16,6 +16,7 @@ const {
   getLogByID,
   getDoc,
   addDoc,
+  removeDoc,
 } = require("../controllers/index");
 
 const upload = multer({ dest: "./uploads" });
@@ -32,6 +33,7 @@ router.post("/logs", addLog);
 router.patch("/logupdate/", logUpdate);
 router.post("/planes", addAircraft);
 router.delete("/parts/:id", removePart);
+router.delete("/docs/:id", removePart);
 router.post("/docs", upload.single("image"), addDoc);
 
 module.exports = router;

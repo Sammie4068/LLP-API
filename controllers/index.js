@@ -14,6 +14,7 @@ const {
   getLogByID,
   getDoc,
   addDoc,
+  removeDoc,
 } = require("../models/index");
 
 const uploadImage = require("../utilities/index");
@@ -176,6 +177,15 @@ exports.logUpdate = async (req, res, next) => {
 exports.removePart = async (req, res, next) => {
   try {
     const results = await removePart(req.params.id);
+    res.json("success");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.removeDoc = async (req, res, next) => {
+  try {
+    const results = await removeDoc(req.params.id);
     res.json("success");
   } catch (err) {
     return next(err);

@@ -128,3 +128,8 @@ exports.removePart = async (id) => {
     "DELETE FROM parts WHERE id = $1",[id]
   )
 }
+exports.removeDoc = async (id) => {
+  return db.query(
+    "DELETE FROM docs WHERE id = $1",[id]
+  )
+}
