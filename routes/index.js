@@ -33,7 +33,7 @@ router.post("/logs", addLog);
 router.patch("/logupdate/", logUpdate);
 router.post("/planes", addAircraft);
 router.delete("/parts/:id", removePart);
-router.delete("/docs/:id", removePart);
+router.delete("/docs/:id", removeDoc);
 router.post("/docs", upload.single("image"), addDoc);
 
 module.exports = router;
