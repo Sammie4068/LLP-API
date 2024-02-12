@@ -15,6 +15,8 @@ const {
   getDoc,
   addDoc,
   removeDoc,
+  removeAircraft,
+  removeLogs,
 } = require("../models/index");
 
 const uploadImage = require("../utilities/index");
@@ -186,6 +188,24 @@ exports.removePart = async (req, res, next) => {
 exports.removeDoc = async (req, res, next) => {
   try {
     const results = await removeDoc(req.params.id);
+    res.json("success");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.removeAircraft = async (req, res, next) => {
+  try {
+    const results = await removeAircraft(req.params.id);
+    res.json("success");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.removeLogs = async (req, res, next) => {
+  try {
+    const results = await removeLogs(req.params.id);
     res.json("success");
   } catch (err) {
     return next(err);

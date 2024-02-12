@@ -133,3 +133,14 @@ exports.removeDoc = async (id) => {
     "DELETE FROM docs WHERE id = $1",[id]
   )
 }
+exports.removeAircraft = async (id) => {
+  return db.query(
+    "DELETE FROM aircrafts WHERE id = $1",[id]
+  )
+}
+
+exports.removeLogs = async (id) => {
+  return db.query(
+    "DELETE FROM logs WHERE id = $1",[id]
+  )
+}
