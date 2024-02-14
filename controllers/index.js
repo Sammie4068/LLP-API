@@ -17,6 +17,9 @@ const {
   removeDoc,
   removeAircraft,
   removeLogs,
+  removeAircraftPart,
+  removeAircraftLogs,
+  removeAircraftDocs,
 } = require("../models/index");
 
 const uploadImage = require("../utilities/index");
@@ -35,11 +38,11 @@ exports.addDoc = async (req, res, next) => {
     );
     status = daysDifference;
     if (daysDifference <= 90 && daysDifference >= 0) {
-      status = "ambient";
-    } else if (daysDifference <= 0) {
+      status = "due";
+    } else if (daysDifference < 0) {
       status = "expired";
     } else {
-      status = "serviceable";
+      status = "active";
     }
 
     const data = {
@@ -132,14 +135,7 @@ exports.addParts = async (req, res, next) => {
 
 exports.addAircraft = async (req, res, next) => {
   try {
-    const { name, tat, tet, landings } = req.body;
-    const data = {
-      name,
-      tat,
-      tet,
-      landings,
-    };
-    const results = await addAircraft(data);
+    const results = await addAircraft(req.body);
     res.json(results.rows);
   } catch (err) {
     return next(err);
@@ -170,7 +166,7 @@ exports.logUpdate = async (req, res, next) => {
     const { aircraft, ac, landings } = req.body;
     const partsUpdate = await logUpdate(ac, aircraft);
     const landingUpdateRes = await landingUpdate(landings, ac, aircraft);
-    res.json("sucess");
+    res.json("success");
   } catch (err) {
     return next(err);
   }
@@ -196,7 +192,13 @@ exports.removeDoc = async (req, res, next) => {
 
 exports.removeAircraft = async (req, res, next) => {
   try {
+
+    const aircraft = req.body.aircraft
     const results = await removeAircraft(req.params.id);
+    const partRes = await removeAircraftPart(aircraft)
+    const logRes = await removeAircraftLogs(aircraft);
+    const docRes = await removeAircraftDocs(aircraft);
+
     res.json("success");
   } catch (err) {
     return next(err);

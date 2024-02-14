@@ -113,12 +113,13 @@ exports.landingUpdate = async (landings,ac, aircraft) => {
 
 exports.addAircraft = async (data) => {
   return db.query(
-    "INSERT INTO aircrafts (name, tat, tet, landings) VALUES ($1, $2, $3, $4) RETURNING *",
+    "INSERT INTO aircrafts (name, tat, tet, landings, prop) VALUES ($1, $2, $3, $4, $5) RETURNING *",
     [
       data.name,
       data.tat,
       data.tet,
-      data.landings
+      data.landings,
+      data.prop
     ]
   );
 };
@@ -138,6 +139,22 @@ exports.removeAircraft = async (id) => {
     "DELETE FROM aircrafts WHERE id = $1",[id]
   )
 }
+exports.removeAircraftPart = async (aircraft) => {
+  return db.query(
+    "DELETE FROM parts WHERE aircraft = $1",[aircraft]
+  )
+}
+exports.removeAircraftLogs = async (aircraft) => {
+  return db.query(
+    "DELETE FROM logs WHERE aircraft = $1",[aircraft]
+  )
+}
+exports.removeAircraftDocs = async (aircraft) => {
+  return db.query(
+    "DELETE FROM docs WHERE aircraft = $1",[aircraft]
+  )
+}
+
 
 exports.removeLogs = async (id) => {
   return db.query(
