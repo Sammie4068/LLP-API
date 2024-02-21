@@ -166,7 +166,7 @@ exports.logUpdate = async (req, res, next) => {
     const { aircraft, ac, landings } = req.body;
     const partsUpdate = await logUpdate(ac, aircraft);
     const landingUpdateRes = await landingUpdate(landings, ac, aircraft);
-    res.json("success");
+    res.json(landingUpdateRes.rows);
   } catch (err) {
     return next(err);
   }

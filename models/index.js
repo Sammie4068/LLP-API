@@ -75,7 +75,6 @@ exports.addDoc = async (data) => {
   );
 };
 
-
 exports.updateParts = async (data) => {
   return db.query(
     "UPDATE parts SET description = $1, number = $2, quantity= $3, ac = $4, hrsleft= $5, date = $6 WHERE id=$7 RETURNING *",
@@ -106,7 +105,7 @@ exports.logUpdate = async (ac, aircraft) => {
 
 exports.landingUpdate = async (landings,ac, aircraft) => {
   return db.query(
-    "UPDATE aircrafts SET landings = landings + $1, tet = tet + $2 WHERE name=$3 RETURNING *",
+    "UPDATE aircrafts SET landings = landings + $1, tat = tat + $2, tet = tet + $2, prop = prop + $2 WHERE name=$3 RETURNING *",
     [landings, ac, aircraft]
   );
 };
